@@ -1,3 +1,0 @@
-C:/Users/hz/Downloads/MyCalculator/CMakeFiles/mycalc.dir
-C:/Users/hz/Downloads/MyCalculator/CMakeFiles/edit_cache.dir
-C:/Users/hz/Downloads/MyCalculator/CMakeFiles/rebuild_cache.dir

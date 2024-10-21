@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/hz/Downloads/MyCalculator/src/calc_backend/calculator.cpp" "CMakeFiles/mycalc.dir/src/calc_backend/calculator.cpp.obj" "gcc" "CMakeFiles/mycalc.dir/src/calc_backend/calculator.cpp.obj.d"
-  "C:/Users/hz/Downloads/MyCalculator/src/calc_window/main_window.cpp" "CMakeFiles/mycalc.dir/src/calc_window/main_window.cpp.obj" "gcc" "CMakeFiles/mycalc.dir/src/calc_window/main_window.cpp.obj.d"
-  "C:/Users/hz/Downloads/MyCalculator/src/main.cpp" "CMakeFiles/mycalc.dir/src/main.cpp.obj" "gcc" "CMakeFiles/mycalc.dir/src/main.cpp.obj.d"
+  "E:/code/MyCalculator/src/calc_backend/calculator.cpp" "CMakeFiles/mycalc.dir/src/calc_backend/calculator.cpp.obj" "gcc" "CMakeFiles/mycalc.dir/src/calc_backend/calculator.cpp.obj.d"
+  "E:/code/MyCalculator/src/calc_window/main_window.cpp" "CMakeFiles/mycalc.dir/src/calc_window/main_window.cpp.obj" "gcc" "CMakeFiles/mycalc.dir/src/calc_window/main_window.cpp.obj.d"
+  "E:/code/MyCalculator/src/main.cpp" "CMakeFiles/mycalc.dir/src/main.cpp.obj" "gcc" "CMakeFiles/mycalc.dir/src/main.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

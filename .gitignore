@@ -3,6 +3,7 @@
 
 ### C++ ###
 # Prerequisites
+.vscode
 *.d
 
 # Compiled Object files

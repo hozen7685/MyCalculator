@@ -20,6 +20,7 @@
  *****************************************************************************/
 #include "calculator.hpp"
 #include <stdio.h>
+#include <cmath>
 
 static int32_t cache_l = 0;
 static int32_t cache_r = 0;
@@ -140,7 +141,7 @@ static int8_t calc_left_and_right(void)
         ret = 0;
         break;
     case MULTIPLY:
-        if ((INT32_MAX / cache_l) > cache_r) {
+        if ((INT32_MAX / abs(cache_l)) > abs(cache_r)) {
             result = cache_l * cache_r;
             ret = 0;
         }
