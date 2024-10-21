@@ -66,7 +66,7 @@ static void res_oper_proc(char op)
         break;
     case RESULT:
         cache_l = result;
-        if (calc_left_and_right()) {
+        if (0 == calc_left_and_right()) {
             snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c %d %c\n",
                 cache_l, operation, cache_r, op);
             snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
