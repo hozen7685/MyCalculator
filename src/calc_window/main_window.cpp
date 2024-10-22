@@ -21,12 +21,14 @@
 #include "main_window.hpp"
 #include <unistd.h>
 #include "../calc_backend/calculator.hpp"
+#include "../calc_backend/calc_states/result_state.hpp"
 
 static lv_display_t *m_display;
 static lv_span_t *m_span_history;
 static lv_span_t *m_span_current;
 static lv_obj_t *m_button_sector;
 static lv_obj_t *m_buttons[BTN_NUM];
+static calculator_c *calc_backend_obj;
 
 static const wchar_t * title = L"MYCALC";
 static lv_style_t cmn_style;
@@ -75,54 +77,54 @@ static void print_timer_cb(lv_timer_t * timer)
 
 static void event_handler_b7(lv_event_t * e)
 {
-    calc_input_proc(7, NUMBER);
+    calc_backend_obj->calc_request(7, NUMBER);
 }
 static void event_handler_b8(lv_event_t * e)
 {
-    calc_input_proc(8, NUMBER);
+    calc_backend_obj->calc_request(8, NUMBER);
 }
 static void event_handler_b9(lv_event_t * e)
 {
-    calc_input_proc(9, NUMBER);
+    calc_backend_obj->calc_request(9, NUMBER);
 }
 static void event_handler_dvi(lv_event_t * e){
-    calc_input_proc(DIVIDE, OPERATOR);
+    calc_backend_obj->calc_request(DIVIDE, OPERATOR);
 }
 static void event_handler_b4(lv_event_t * e){
-    calc_input_proc(4, NUMBER);
+    calc_backend_obj->calc_request(4, NUMBER);
 }
 static void event_handler_b5(lv_event_t * e){
-    calc_input_proc(5, NUMBER);
+    calc_backend_obj->calc_request(5, NUMBER);
 }
 static void event_handler_b6(lv_event_t * e){
-    calc_input_proc(6, NUMBER);
+    calc_backend_obj->calc_request(6, NUMBER);
 }
 static void event_handler_mp(lv_event_t * e){
-    calc_input_proc(MULTIPLY, OPERATOR);
+    calc_backend_obj->calc_request(MULTIPLY, OPERATOR);
 }
 static void event_handler_b1(lv_event_t * e){
-    calc_input_proc(1, NUMBER);
+    calc_backend_obj->calc_request(1, NUMBER);
 }
 static void event_handler_b2(lv_event_t * e){
-    calc_input_proc(2, NUMBER);
+    calc_backend_obj->calc_request(2, NUMBER);
 }
 static void event_handler_b3(lv_event_t * e){
-    calc_input_proc(3, NUMBER);
+    calc_backend_obj->calc_request(3, NUMBER);
 }
 static void event_handler_mi(lv_event_t * e){
-    calc_input_proc(MINUS, OPERATOR);
+    calc_backend_obj->calc_request(MINUS, OPERATOR);
 }
 static void event_handler_bc(lv_event_t * e){
-    calc_input_proc(CLEAR, OPERATOR);
+    calc_backend_obj->calc_request(CLEAR, OPERATOR);
 }
 static void event_handler_b0(lv_event_t * e){
-    calc_input_proc(0, NUMBER);
+    calc_backend_obj->calc_request(0, NUMBER);
 }
 static void event_handler_rs(lv_event_t * e){
-    calc_input_proc(RESULT, OPERATOR);
+    calc_backend_obj->calc_request(RESULT, OPERATOR);
 }
 static void event_handler_pl(lv_event_t * e){
-    calc_input_proc(PLUS, OPERATOR);
+    calc_backend_obj->calc_request(PLUS, OPERATOR);
 }
 
 main_window_c::main_window_c()
@@ -134,6 +136,7 @@ main_window_c::~main_window_c()
 
 void main_window_c::create_calc_window(void)
 {
+    calc_backend_obj = new calculator_c(new result_state_c());
     lv_init();
     m_display = lv_windows_create_display(title, 480, 640, 100, FALSE, FALSE);
     lv_windows_acquire_pointer_indev(m_display);

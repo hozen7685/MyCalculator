@@ -14,40 +14,26 @@
  *****************************************************************************/
 #ifndef __CALCULATOR_HPP__
 #define __CALCULATOR_HPP__
-#include <cstdint>
+#include "calc_state.hpp"
+#include "calc_data.hpp"
+using namespace std;
 
-#define PLUS        '+'
-#define MINUS       '-'
-#define MULTIPLY    '*'
-#define DIVIDE      '/'
-#define RESULT      '='
-#define CLEAR       'c'
-#define WORDS_MAX   64
-#define INT32_MAX   2147483647
+class calculator_c
+{
+private:
+    calc_state_c *calc_state_;
+public:
+    calculator_c(calc_state_c *state) : calc_state_(nullptr) {
+        this->trans_to(state);
+    }
 
-typedef enum {
-    NUMBER,
-    OPERATOR
-} input_type_t;
+    ~calculator_c() {
+        delete calc_state_;
+    }
 
-typedef enum {
-    LEFT_S,
-    OPER_S,
-    RIGHT_S,
-    RESULT_S,
-    ERROR_S
-} calc_state_t;
+    void trans_to(calc_state_c *state);
 
-static void update_left(char l);
-static void update_right(char l);
-static void res_oper_proc(char op);
-static void update_oper(char op);
-static int8_t calc_left_and_right(void);
-static void update_left_and_operator(char op);
-static void update_right_and_operator(char op);
+    void calc_request(char value, input_type_t type);
+};
 
-
-extern char g_history_buffer[WORDS_MAX];
-extern char g_current_buffer[WORDS_MAX];
-extern void calc_input_proc(char value, input_type_t type);
 #endif /* __CALCULATOR_HPP__ */

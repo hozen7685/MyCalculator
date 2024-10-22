@@ -1,7 +1,7 @@
 /******************************************************************************
  *  Copyright 2024
  *
- *  @file    calculator.cpp
+ *  @file    error_state.cpp
  *
  *  @brief   
  *
@@ -9,7 +9,7 @@
  *  Revision History
  *  Version     Date        Author      Content
  *  -------     ----------  ---------   ---------------------------------------
- *  V1.00       2024/10/19  caohozen      Create.
+ *  V1.00       2024/10/22  caohz      Create.
  *
  *****************************************************************************/
 
@@ -18,26 +18,35 @@
  * INCLUDES
  *
  *****************************************************************************/
-#include "calculator.hpp"
-#include <typeinfo>
-#include <iostream>
+#include "error_state.hpp"
+#include "calc_data.hpp"
+
 /******************************************************************************
  *
  * FUNCTIONS
  *
  *****************************************************************************/
-void calculator_c::trans_to(calc_state_c *state)
+void error_state_c::input_state_proc(char value, input_type_t type)
 {
-    cout << "calculator: trans to " << typeid(*state).name() << ".\n";
-    if (nullptr != this->calc_state_) {
-        delete this->calc_state_;
+    switch (type)
+    {
+    case NUMBER:
+        cache_l = 0;
+        cache_r = 0;
+        update_left(value);
+        snprintf(g_history_buffer, (WORDS_MAX - 1), "\n");
+        state = LEFT_S;
+        break;
+    case OPERATOR:
+        cache_l = 0;
+        cache_r = 0;
+        result = 0;
+        snprintf(g_history_buffer, (WORDS_MAX - 1), "\n");
+        snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
+        state = RESULT_S;
+        break;
+    default:
+        break;
     }
-    this->calc_state_ = state;
-    this->calc_state_->set_calculator(this);
-}
-
-void calculator_c::calc_request(char value, input_type_t type)
-{
-    this->calc_state_->input_state_proc(value, type);
 }
 /* - End Of File - */

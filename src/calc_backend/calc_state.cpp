@@ -1,7 +1,7 @@
 /******************************************************************************
  *  Copyright 2024
  *
- *  @file    calculator.cpp
+ *  @file    calc_state.cpp
  *
  *  @brief   
  *
@@ -9,7 +9,7 @@
  *  Revision History
  *  Version     Date        Author      Content
  *  -------     ----------  ---------   ---------------------------------------
- *  V1.00       2024/10/19  caohozen      Create.
+ *  V1.00       2024/10/22  caohz      Create.
  *
  *****************************************************************************/
 
@@ -18,26 +18,16 @@
  * INCLUDES
  *
  *****************************************************************************/
-#include "calculator.hpp"
-#include <typeinfo>
-#include <iostream>
+#include "plat.h"
+#include "calc_state.hpp"
+
 /******************************************************************************
  *
  * FUNCTIONS
  *
  *****************************************************************************/
-void calculator_c::trans_to(calc_state_c *state)
+void calc_state_c::set_calculator(calculator_c *calculator)
 {
-    cout << "calculator: trans to " << typeid(*state).name() << ".\n";
-    if (nullptr != this->calc_state_) {
-        delete this->calc_state_;
-    }
-    this->calc_state_ = state;
-    this->calc_state_->set_calculator(this);
-}
-
-void calculator_c::calc_request(char value, input_type_t type)
-{
-    this->calc_state_->input_state_proc(value, type);
+    this->calculator_ = calculator;
 }
 /* - End Of File - */

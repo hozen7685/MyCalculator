@@ -36,8 +36,6 @@
  **********************/
 int main(int argc, char const *argv[])
 {
-    // main_window_c *window = new main_window_c();
-    // window->create_calc_window();
     main_window_c::create_calc_window();
     return 0;
 }
