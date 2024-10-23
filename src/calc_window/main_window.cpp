@@ -3,7 +3,7 @@
  *
  *  @file    main_window.cpp
  *
- *  @brief   
+ *  @brief
  *
  *=============================================================================
  *  Revision History
@@ -20,18 +20,17 @@
  *****************************************************************************/
 #include "main_window.hpp"
 #include <unistd.h>
-#include "../calc_backend/calculator.hpp"
-#include "../calc_backend/calc_states/result_state.hpp"
+#include "../calc_backend/calc_state.hpp"
+#include "../calc_backend/calc_states/clear_state.hpp"
 #include "../calc_backend/calc_data.hpp"
 
-static lv_display_t *m_display;
 static lv_span_t *m_span_history;
 static lv_span_t *m_span_current;
 static lv_obj_t *m_button_sector;
 static lv_obj_t *m_buttons[BTN_NUM];
 static calculator_c *calc_backend_obj;
 
-static const wchar_t * title = L"MYCALC";
+static const char * title = "MYCALC";
 static lv_style_t cmn_style;
 static const char *s_button_lable[BTN_NUM] = {
     "7",  "8",  "9",  "/",
@@ -137,17 +136,28 @@ main_window_c::~main_window_c()
 
 void main_window_c::create_calc_window(void)
 {
-    calc_backend_obj = new calculator_c(new result_state_c());
+    calc_backend_obj = new calculator_c(new clear_state_c());
     lv_init();
-    m_display = lv_windows_create_display(title, 480, 640, 100, FALSE, FALSE);
-    lv_windows_acquire_pointer_indev(m_display);
+#if WINDOWS
+    lv_display_t * disp = lv_windows_create_display(title, 480, 640, 100, FALSE, FALSE);
+    lv_windows_acquire_pointer_indev(disp);
+#else
+    // lv_group_set_default(lv_group_create());
+    lv_display_t * disp = lv_sdl_window_create(480, 640);
+    lv_sdl_window_set_title(disp, title);
+    lv_display_set_default(disp);
+
+    lv_indev_t * mouse = lv_sdl_mouse_create();
+    // lv_indev_set_group(mouse, lv_group_get_default());
+    lv_indev_set_display(mouse, disp);
+#endif
     LV_LOG_USER("LVGL initialization completed!");
     create_calc_layout();
     while(1) {
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
-        usleep(1000);       /*Just to let the system breath*/
+        usleep(5000);       /*Just to let the system breath*/
     }
 }
 
@@ -173,7 +183,7 @@ static void create_calc_layout(void)
     lv_spangroup_set_mode(spans_sector, LV_SPAN_MODE_FIXED);
 
     m_span_history = lv_spangroup_new_span(spans_sector);
-    
+
     lv_style_set_text_color(lv_span_get_style(m_span_history), lv_color_hex(0xa3a3a3));
     lv_style_set_text_font(lv_span_get_style(m_span_history),  &lv_font_montserrat_16);
     m_span_current = lv_spangroup_new_span(spans_sector);
@@ -191,7 +201,7 @@ static void create_calc_layout(void)
     for (size_t i = 0; i < BTN_NUM; ++i)
     {
         m_buttons[i] = lv_button_create(m_button_sector);
-        lv_obj_add_event_cb(m_buttons[i], btn_event_cb[i], LV_EVENT_CLICKED, NULL);
+        lv_obj_add_event_cb(m_buttons[i], btn_event_cb[i], LV_EVENT_SHORT_CLICKED, NULL);
         lv_obj_set_size(m_buttons[i], 77, 51);
         lv_obj_set_style_bg_color(m_buttons[i], lv_color_hex(0xffffff), LV_PART_MAIN);
         lv_obj_t *lable = lv_label_create(m_buttons[i]);

@@ -3,7 +3,7 @@
  *
  *  @file    calc_data.cpp
  *
- *  @brief   
+ *  @brief
  *
  *=============================================================================
  *  Revision History
@@ -38,7 +38,6 @@ void update_left(char l)
 {
     if (cache_l < (INT32_MAX / 10)) {
         cache_l = 10 * cache_l + l;
-        snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", cache_l);
     }
 }
 
@@ -46,87 +45,7 @@ void update_right(char l)
 {
     if (cache_r < (INT32_MAX / 10)) {
         cache_r = 10 * cache_r + l;
-        snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", cache_r);
     }
-}
-
-calc_state_t res_oper_proc(char op)
-{
-    calc_state_t ret = KEEP_S;
-    switch (op)
-    {
-    case PLUS:
-    case MINUS:
-    case MULTIPLY:
-    case DIVIDE:
-        cache_l = result;
-        operation = op;
-        cache_r = result;
-        snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c\n", result, operation);
-        snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        ret = OPER_S;
-        break;
-    case RESULT:
-        cache_l = result;
-        if (0 == calc_left_and_right()) {
-            snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c %d %c\n",
-                cache_l, operation, cache_r, op);
-            snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        } else {
-            snprintf(g_current_buffer, (WORDS_MAX - 1), "error overflow");
-            ret = ERROR_S;
-        }
-        break;
-    case CLEAR:
-        cache_l = 0;
-        cache_r = 0;
-        result = 0;
-        snprintf(g_history_buffer, (WORDS_MAX - 1), "\n", result);
-        snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        ret = RESULT_S;
-        break;
-    default:
-        break;
-    }
-    return ret;
-}
-
-calc_state_t update_oper(char op)
-{
-    calc_state_t ret = KEEP_S;
-    switch (op)
-    {
-    case PLUS:
-    case MINUS:
-    case MULTIPLY:
-    case DIVIDE:
-        operation = op;
-        snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c\n", cache_l, operation);
-        break;
-    case RESULT:
-        cache_r = cache_l;
-        if(0 == calc_left_and_right()) {
-            snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c %d %c\n",
-                cache_l, operation, cache_l, op);
-            snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-            ret = RESULT_S;
-        } else {
-            snprintf(g_current_buffer, (WORDS_MAX - 1), "error overflow");
-            ret = ERROR_S;
-        }
-        break;
-    case CLEAR:
-        cache_l = 0;
-        cache_r = 0;
-        result = 0;
-        snprintf(g_history_buffer, (WORDS_MAX - 1), "\n", result);
-        snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        ret = RESULT_S;
-        break;
-    default:
-        break;
-    }
-    return ret;
 }
 
 int8_t calc_left_and_right(void)
@@ -155,84 +74,6 @@ int8_t calc_left_and_right(void)
             result = cache_l / cache_r;
             ret = 0;
         }
-        break;
-    default:
-        break;
-    }
-    return ret;
-}
-
-calc_state_t update_left_and_operator(char op)
-{
-    calc_state_t ret = KEEP_S;
-    switch (op)
-    {
-    case PLUS:
-    case MINUS:
-    case MULTIPLY:
-    case DIVIDE:
-        operation = op;
-        snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c\n", cache_l, operation);
-        ret = OPER_S;
-        break;
-    case RESULT:
-        result = cache_l;
-        snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c\n", cache_l, op);
-        snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        ret = RESULT_S;
-        break;
-    case CLEAR:
-        cache_l = 0;
-        cache_r = 0;
-        result = 0;
-        snprintf(g_history_buffer, (WORDS_MAX - 1), "\n");
-        snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        ret = RESULT_S;
-        break;
-    default:
-        break;
-    }
-    return ret;
-}
-
-calc_state_t update_right_and_operator(char op)
-{
-    calc_state_t ret = KEEP_S;
-    switch (op)
-    {
-    case PLUS:
-    case MINUS:
-    case MULTIPLY:
-    case DIVIDE:
-        if (0 == calc_left_and_right()) {
-            operation = op;
-            snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c\n", result, operation);
-            snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-            cache_l = result;
-            ret = OPER_S;
-        } else {
-            snprintf(g_current_buffer, (WORDS_MAX - 1), "error overflow");
-            ret = ERROR_S;
-        }
-        break;
-    case RESULT:
-        if(0 == calc_left_and_right()) {
-            snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c %d %c\n",
-                cache_l, operation, cache_r, op);
-            snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-            ret = RESULT_S;
-        } else {
-            snprintf(g_current_buffer, (WORDS_MAX - 1), "error overflow");
-            ret = ERROR_S;
-        }
-        break;
-    case CLEAR:
-        cache_l = 0;
-        cache_r = 0;
-        result = 0;
-        snprintf(g_history_buffer, (WORDS_MAX - 1), "\n");
-        snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        ret = RESULT_S;
         break;
     default:
         break;

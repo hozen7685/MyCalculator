@@ -3,7 +3,7 @@
  *
  *  @file    calc_data.hpp
  *
- *  @brief   
+ *  @brief
  *
  *=============================================================================
  *  Revision History
@@ -46,9 +46,5 @@ extern char g_current_buffer[WORDS_MAX];
 extern void update_left(char l);
 extern void update_right(char l);
 extern int8_t calc_left_and_right(void);
-extern calc_state_t res_oper_proc(char op);
-extern calc_state_t update_oper(char op);
-extern calc_state_t update_left_and_operator(char op);
-extern calc_state_t update_right_and_operator(char op);
 
 #endif /* __CALC_DATA_HPP__ */
