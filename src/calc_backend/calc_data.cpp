@@ -26,7 +26,6 @@ int32_t cache_l = 0;
 int32_t cache_r = 0;
 int32_t result = 0;
 char operation = 0;
-calc_state_t state = RESULT_S;
 char g_history_buffer[WORDS_MAX] = "\n";
 char g_current_buffer[WORDS_MAX] = "0";
 
@@ -51,8 +50,9 @@ void update_right(char l)
     }
 }
 
-void res_oper_proc(char op)
+calc_state_t res_oper_proc(char op)
 {
+    calc_state_t ret = KEEP_S;
     switch (op)
     {
     case PLUS:
@@ -64,7 +64,7 @@ void res_oper_proc(char op)
         cache_r = result;
         snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c\n", result, operation);
         snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        state = OPER_S;
+        ret = OPER_S;
         break;
     case RESULT:
         cache_l = result;
@@ -74,7 +74,7 @@ void res_oper_proc(char op)
             snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
         } else {
             snprintf(g_current_buffer, (WORDS_MAX - 1), "error overflow");
-            state = ERROR_S;
+            ret = ERROR_S;
         }
         break;
     case CLEAR:
@@ -83,15 +83,17 @@ void res_oper_proc(char op)
         result = 0;
         snprintf(g_history_buffer, (WORDS_MAX - 1), "\n", result);
         snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        state = RESULT_S;
+        ret = RESULT_S;
         break;
     default:
         break;
     }
+    return ret;
 }
 
-void update_oper(char op)
+calc_state_t update_oper(char op)
 {
+    calc_state_t ret = KEEP_S;
     switch (op)
     {
     case PLUS:
@@ -107,10 +109,10 @@ void update_oper(char op)
             snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c %d %c\n",
                 cache_l, operation, cache_l, op);
             snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-            state = RESULT_S;
+            ret = RESULT_S;
         } else {
             snprintf(g_current_buffer, (WORDS_MAX - 1), "error overflow");
-            state = ERROR_S;
+            ret = ERROR_S;
         }
         break;
     case CLEAR:
@@ -119,11 +121,12 @@ void update_oper(char op)
         result = 0;
         snprintf(g_history_buffer, (WORDS_MAX - 1), "\n", result);
         snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        state = RESULT_S;
+        ret = RESULT_S;
         break;
     default:
         break;
     }
+    return ret;
 }
 
 int8_t calc_left_and_right(void)
@@ -159,8 +162,9 @@ int8_t calc_left_and_right(void)
     return ret;
 }
 
-void update_left_and_operator(char op)
+calc_state_t update_left_and_operator(char op)
 {
+    calc_state_t ret = KEEP_S;
     switch (op)
     {
     case PLUS:
@@ -169,13 +173,13 @@ void update_left_and_operator(char op)
     case DIVIDE:
         operation = op;
         snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c\n", cache_l, operation);
-        state = OPER_S;
+        ret = OPER_S;
         break;
     case RESULT:
         result = cache_l;
         snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c\n", cache_l, op);
         snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        state = RESULT_S;
+        ret = RESULT_S;
         break;
     case CLEAR:
         cache_l = 0;
@@ -183,15 +187,17 @@ void update_left_and_operator(char op)
         result = 0;
         snprintf(g_history_buffer, (WORDS_MAX - 1), "\n");
         snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        state = RESULT_S;
+        ret = RESULT_S;
         break;
     default:
         break;
     }
+    return ret;
 }
 
-void update_right_and_operator(char op)
+calc_state_t update_right_and_operator(char op)
 {
+    calc_state_t ret = KEEP_S;
     switch (op)
     {
     case PLUS:
@@ -203,10 +209,10 @@ void update_right_and_operator(char op)
             snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c\n", result, operation);
             snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
             cache_l = result;
-            state = OPER_S;
+            ret = OPER_S;
         } else {
             snprintf(g_current_buffer, (WORDS_MAX - 1), "error overflow");
-            state = ERROR_S;
+            ret = ERROR_S;
         }
         break;
     case RESULT:
@@ -214,10 +220,10 @@ void update_right_and_operator(char op)
             snprintf(g_history_buffer, (WORDS_MAX - 1), "%d %c %d %c\n",
                 cache_l, operation, cache_r, op);
             snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-            state = RESULT_S;
+            ret = RESULT_S;
         } else {
             snprintf(g_current_buffer, (WORDS_MAX - 1), "error overflow");
-            state = ERROR_S;
+            ret = ERROR_S;
         }
         break;
     case CLEAR:
@@ -226,11 +232,12 @@ void update_right_and_operator(char op)
         result = 0;
         snprintf(g_history_buffer, (WORDS_MAX - 1), "\n");
         snprintf(g_current_buffer, (WORDS_MAX - 1), "%d", result);
-        state = RESULT_S;
+        ret = RESULT_S;
         break;
     default:
         break;
     }
+    return ret;
 }
 
 /* - End Of File - */

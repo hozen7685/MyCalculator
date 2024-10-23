@@ -19,16 +19,15 @@
  *
  *****************************************************************************/
 #include "left_state.hpp"
-#include "../calc_data.hpp"
 
 /******************************************************************************
  *
  * FUNCTIONS
  *
  *****************************************************************************/
-void left_state_c::input_state_proc(char value, input_type_t type)
+void left_state_c::input_state_proc(char value)
 {
-    switch (type)
+    switch (value)
     {
     case NUMBER:
         update_left(value);

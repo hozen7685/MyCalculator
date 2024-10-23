@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "../calc_backend/calculator.hpp"
 #include "../calc_backend/calc_states/result_state.hpp"
+#include "../calc_backend/calc_data.hpp"
 
 static lv_display_t *m_display;
 static lv_span_t *m_span_history;
@@ -77,54 +78,54 @@ static void print_timer_cb(lv_timer_t * timer)
 
 static void event_handler_b7(lv_event_t * e)
 {
-    calc_backend_obj->calc_request(7, NUMBER);
+    calc_backend_obj->calc_request(NUM_7);
 }
 static void event_handler_b8(lv_event_t * e)
 {
-    calc_backend_obj->calc_request(8, NUMBER);
+    calc_backend_obj->calc_request(NUM_8);
 }
 static void event_handler_b9(lv_event_t * e)
 {
-    calc_backend_obj->calc_request(9, NUMBER);
+    calc_backend_obj->calc_request(NUM_9);
 }
 static void event_handler_dvi(lv_event_t * e){
-    calc_backend_obj->calc_request(DIVIDE, OPERATOR);
+    calc_backend_obj->calc_request(DIVIDE);
 }
 static void event_handler_b4(lv_event_t * e){
-    calc_backend_obj->calc_request(4, NUMBER);
+    calc_backend_obj->calc_request(NUM_4);
 }
 static void event_handler_b5(lv_event_t * e){
-    calc_backend_obj->calc_request(5, NUMBER);
+    calc_backend_obj->calc_request(NUM_5);
 }
 static void event_handler_b6(lv_event_t * e){
-    calc_backend_obj->calc_request(6, NUMBER);
+    calc_backend_obj->calc_request(NUM_6);
 }
 static void event_handler_mp(lv_event_t * e){
-    calc_backend_obj->calc_request(MULTIPLY, OPERATOR);
+    calc_backend_obj->calc_request(MULTIPLY);
 }
 static void event_handler_b1(lv_event_t * e){
-    calc_backend_obj->calc_request(1, NUMBER);
+    calc_backend_obj->calc_request(NUM_1);
 }
 static void event_handler_b2(lv_event_t * e){
-    calc_backend_obj->calc_request(2, NUMBER);
+    calc_backend_obj->calc_request(NUM_2);
 }
 static void event_handler_b3(lv_event_t * e){
-    calc_backend_obj->calc_request(3, NUMBER);
+    calc_backend_obj->calc_request(NUM_3);
 }
 static void event_handler_mi(lv_event_t * e){
-    calc_backend_obj->calc_request(MINUS, OPERATOR);
+    calc_backend_obj->calc_request(MINUS);
 }
 static void event_handler_bc(lv_event_t * e){
-    calc_backend_obj->calc_request(CLEAR, OPERATOR);
+    calc_backend_obj->calc_request(CLEAR);
 }
 static void event_handler_b0(lv_event_t * e){
-    calc_backend_obj->calc_request(0, NUMBER);
+    calc_backend_obj->calc_request(NUM_0);
 }
 static void event_handler_rs(lv_event_t * e){
-    calc_backend_obj->calc_request(RESULT, OPERATOR);
+    calc_backend_obj->calc_request(RESULT);
 }
 static void event_handler_pl(lv_event_t * e){
-    calc_backend_obj->calc_request(PLUS, OPERATOR);
+    calc_backend_obj->calc_request(PLUS);
 }
 
 main_window_c::main_window_c()

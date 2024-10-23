@@ -36,8 +36,8 @@ void calculator_c::trans_to(calc_state_c *state)
     this->calc_state_->set_calculator(this);
 }
 
-void calculator_c::calc_request(char value, input_type_t type)
+void calculator_c::calc_request(char value)
 {
-    this->calc_state_->input_state_proc(value, type);
+    this->calc_state_->input_state_proc(value);
 }
 /* - End Of File - */

@@ -28,7 +28,7 @@ private:
     
 // Member Functions
 public:
-    void input_state_proc(char value, input_type_t type) override;
+    void input_state_proc(char value) override;
 protected:
     
 private:

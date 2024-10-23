@@ -17,7 +17,7 @@
 
 #include "../calc_state.hpp"
 
-class left_state_c : calc_state_c
+class left_state_c : public calc_state_c
 {
 // Member Variables
 public:
@@ -28,7 +28,7 @@ private:
     
 // Member Functions
 public:
-    void input_state_proc(char value, input_type_t type) override;
+    void input_state_proc(char value) override;
 protected:
     
 private:

@@ -15,7 +15,6 @@
 #ifndef __CALCULATOR_HPP__
 #define __CALCULATOR_HPP__
 #include "calc_state.hpp"
-#include "calc_data.hpp"
 using namespace std;
 
 class calculator_c
@@ -33,7 +32,7 @@ public:
 
     void trans_to(calc_state_c *state);
 
-    void calc_request(char value, input_type_t type);
+    void calc_request(char value);
 };
 
 #endif /* __CALCULATOR_HPP__ */

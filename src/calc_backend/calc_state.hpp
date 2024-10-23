@@ -31,7 +31,7 @@ public:
     }
 
     void set_calculator(calculator_c *calculator);
-    virtual void input_state_proc(char value, input_type_t type) = 0;
+    virtual void input_state_proc(char value) = 0;
 protected:
     
 private:

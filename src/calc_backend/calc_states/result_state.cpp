@@ -1,10 +1,9 @@
 #include "result_state.hpp"
-#include "../calc_data.hpp"
 #include "left_state.hpp"
 
-void result_state_c::input_state_proc(char value, input_type_t type)
+void result_state_c::input_state_proc(char value)
 {
-    switch (type)
+    switch (value)
     {
     case NUMBER:
         cache_l = 0;

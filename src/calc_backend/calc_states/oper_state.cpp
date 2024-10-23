@@ -19,16 +19,15 @@
  *
  *****************************************************************************/
 #include "oper_state.hpp"
-#include "../calc_data.hpp"
 
 /******************************************************************************
  *
  * FUNCTIONS
  *
  *****************************************************************************/
-void oper_state_c::input_state_proc(char value, input_type_t type)
+void oper_state_c::input_state_proc(char value)
 {
-    switch (type)
+    switch (value)
     {
     case NUMBER:
         cache_r = 0;

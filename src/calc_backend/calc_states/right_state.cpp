@@ -19,15 +19,14 @@
  *
  *****************************************************************************/
 #include "right_state.hpp"
-#include "../calc_data.hpp"
 /******************************************************************************
  *
  * FUNCTIONS
  *
  *****************************************************************************/
-void right_state_c::input_state_proc(char value, input_type_t type)
+void right_state_c::input_state_proc(char value)
 {
-    switch (type)
+    switch (value)
     {
     case NUMBER:
         update_right(value);

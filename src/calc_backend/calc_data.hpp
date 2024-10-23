@@ -23,36 +23,32 @@
 #define DIVIDE      '/'
 #define RESULT      '='
 #define CLEAR       'c'
+#define NUM_0       (char)0
+#define NUM_1       (char)1
+#define NUM_2       (char)2
+#define NUM_3       (char)3
+#define NUM_4       (char)4
+#define NUM_5       (char)5
+#define NUM_6       (char)6
+#define NUM_7       (char)7
+#define NUM_8       (char)8
+#define NUM_9       (char)9
 #define WORDS_MAX   64
 #define INT32_MAX   2147483647
-
-typedef enum {
-    NUMBER,
-    OPERATOR
-} input_type_t;
-
-typedef enum {
-    LEFT_S,
-    OPER_S,
-    RIGHT_S,
-    RESULT_S,
-    ERROR_S
-} calc_state_t;
 
 extern int32_t cache_l;
 extern int32_t cache_r;
 extern int32_t result;
 extern char operation;
-extern calc_state_t state;
 extern char g_history_buffer[WORDS_MAX];
 extern char g_current_buffer[WORDS_MAX];
 
 extern void update_left(char l);
 extern void update_right(char l);
-extern void res_oper_proc(char op);
-extern void update_oper(char op);
 extern int8_t calc_left_and_right(void);
-extern void update_left_and_operator(char op);
-extern void update_right_and_operator(char op);
+extern calc_state_t res_oper_proc(char op);
+extern calc_state_t update_oper(char op);
+extern calc_state_t update_left_and_operator(char op);
+extern calc_state_t update_right_and_operator(char op);
 
 #endif /* __CALC_DATA_HPP__ */
